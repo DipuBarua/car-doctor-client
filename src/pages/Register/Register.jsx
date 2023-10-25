@@ -3,33 +3,40 @@ import img from "../../assets/images/login/login.svg"
 import { useContext } from "react";
 import { AuthContext } from "../../contextProviders/AuthProvider";
 
-const Login = () => {
-    const { signIn } = useContext(AuthContext);
+const Register = () => {
+    const { createUser } = useContext(AuthContext)
 
-    const handleLogin = event => {
+    const handleRegister = event => {
         event.preventDefault();
         const form = event.target;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+        console.log(name, email, password);
 
-        // sign in 
-        signIn(email, password)
+        // register 
+        createUser(email, password)
             .then(result => {
-                console.log(result.user);
+                const user = result.user;
+                console.log(user);
             })
             .catch(error => {
                 console.log(error);
             })
-
     }
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex flex-col md:flex-row gap-10">
                 <img src={img} alt="" />
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                    <form onSubmit={handleLogin} className="card-body">
-                        <h2 className=" text-center text-3xl font-bold">Log In</h2>
+                <div className="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
+                    <form onSubmit={handleRegister} className="card-body">
+                        <h2 className=" text-center text-3xl font-bold">Sign Up</h2>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" name="name" placeholder="name" className="input input-bordered" required />
+                        </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -38,18 +45,15 @@ const Login = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">Password</span>
+                                <span className="label-text">Confirm Password</span>
                             </label>
                             <input type="password" name="password" placeholder="password" className="input input-bordered" required />
-                            <label className="label">
-                                <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                            </label>
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-warning">Login</button>
+                            <button className="btn btn-warning">Sign Up</button>
                         </div>
                         <div>
-                            <p>Have an account? if no, please <Link to={'/register'}><button className="btn-link font-semibold text-orange-600">Sign Up</button></Link></p>
+                            <p>Already have an account? if Yes, please <Link to={"/login"}><button className="btn-link font-semibold text-orange-600">Login</button></Link></p>
                         </div>
                     </form>
                 </div>
@@ -58,4 +62,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
