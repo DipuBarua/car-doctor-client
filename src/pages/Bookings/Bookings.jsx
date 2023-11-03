@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contextProviders/AuthProvider";
 import BookingRow from "./BookingRow";
-import NoWorkResult from "postcss/lib/no-work-result";
+import axios from "axios";
 
 const Bookings = () => {
     const { user } = useContext(AuthContext);
@@ -9,10 +9,19 @@ const Bookings = () => {
 
     const url = `http://localhost:5000/bookings?email=${user?.email}`;
     useEffect(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setBookings(data))
-    }, []);
+
+        // using axios instead of fetch 
+        //Note: when axios send request for data then also send cookie by withCredentials: true...
+        axios.get(url, { withCredentials: true })
+            .then(res => {
+                setBookings(res.data);
+            })
+
+
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(data => setBookings(data))
+    }, [url]);
 
 
     const handleDelete = (id) => {
