@@ -8,7 +8,7 @@ const Login = () => {
     const { signIn } = useContext(AuthContext);
     const location = useLocation();
     console.log(location);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleLogin = event => {
         event.preventDefault();
@@ -25,7 +25,8 @@ const Login = () => {
 
                 // get access token 
                 const user = { email };
-                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                axios.post('https://car-doctor-server-lemon-ten.vercel.app/jwt', user, 
+                { withCredentials: true })
                     .then(res => {
                         console.log(res.data);
                     })
